@@ -1043,7 +1043,7 @@ class Wave:
         wfile.write(self)
         wfile.close()
 
-    def play(self, filename="sound.wav"):
+    def play(self, filename: object = "sound.wav") -> object:
         """Plays a wave file.
 
         filename: string
