@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Entities>
+  <Entity RecordType="Emerson.CSI.DataImport.MHM.TrendData">
+    <Property Name="AlarmLimitsSetNumber" IsReadOnly="False" ValueType="System.Int32">2</Property>
+    <Property Name="AnalysisParamaterSetNumber" IsReadOnly="False" ValueType="System.Int32">2</Property>
+    <Property Name="ParameterNames" IsReadOnly="True" IsList="True" ListType="List&lt;string&gt;" ValueType="Array" ArrayType="System.String" Count="2">System.Collections.Generic.List`1[System.String]<Data>PV OVERALL|PV WAVEFORM</Data></Property>
+    <Property Name="ParameterValues" IsReadOnly="True" IsList="True" ListType="List&lt;float&gt;" ValueType="Array" ArrayType="System.Single" Count="2">System.Collections.Generic.List`1[System.Single]<Data>0.02696,0.24643</Data></Property>
+    <Property Name="NumberOfParameters" IsReadOnly="False" ValueType="System.Int32">2</Property>
+    <Property Name="ModifiedSinceLastDataDump" IsReadOnly="False" ValueType="System.Boolean">False</Property>
+    <Property Name="Load" IsReadOnly="False" ValueType="System.Single">0</Property>
+    <Property Name="RPM" IsReadOnly="False" ValueType="System.Single">165.3317</Property>
+    <Property Name="Value" IsReadOnly="False" ValueType="System.Single">-1.1E-20</Property>
+    <Property Name="SampleID" IsReadOnly="False" ValueType="System.Int32">-1821278</Property>
+    <Property Name="Timestamp_as_String" IsReadOnly="True" ValueType="System.String">7/19/2018 11:27:46 PM</Property>
+    <Property Name="Timestamp_as_UInt" IsReadOnly="False" ValueType="System.UInt32">1532060866</Property>
+    <Property Name="Timestamp" IsReadOnly="False" ValueType="System.DateTime">7/19/2018 11:27:46 PM</Property>
+    <Property Name="StorageFlag" IsReadOnly="False" ValueType="Enum" EnumType="Emerson.CSI.DataImport.MHM.TrendDataStorageType" EnumValue="2">RPM_And_Overall</Property>
+    <Property Name="Parents" IsReadOnly="False" IsList="True" ListType="List&lt;string&gt;" ValueType="Array" ArrayType="System.String" Count="5">System.Collections.Generic.List`1[System.String]<Data>Database=phmhmdb4fp;C:\RBMdbsrv\CustData\4fp_online_1806.rbm;-99|Area=4PMT;-604|Equipment=PUTS;-694|MeasurementPoint=SR;-761|DataCollectionSet=PeakVue;-765</Data></Property>
+  </Entity>
+</Entities>

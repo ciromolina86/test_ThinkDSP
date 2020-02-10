@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Entities>
+  <Entity RecordType="Emerson.CSI.DataImport.MHM.TrendData">
+    <Property Name="AlarmLimitsSetNumber" IsReadOnly="False" ValueType="System.Int32">8</Property>
+    <Property Name="AnalysisParamaterSetNumber" IsReadOnly="False" ValueType="System.Int32">8</Property>
+    <Property Name="ParameterNames" IsReadOnly="True" IsList="True" ListType="List&lt;string&gt;" ValueType="Array" ArrayType="System.String" Count="12">System.Collections.Generic.List`1[System.String]<Data>OVERALL|PK-PK WAVEFORM|HFD|CREST FACTOR|SYNC 1-6|1X|2X|3X-4X|FTF|BSF|BPFO|BPFI</Data></Property>
+    <Property Name="ParameterValues" IsReadOnly="True" IsList="True" ListType="List&lt;float&gt;" ValueType="Array" ArrayType="System.Single" Count="12">System.Collections.Generic.List`1[System.Single]<Data>0.02338,0.09116,0.01399,4.13680,0.01881,0.01127,0.01404,0.00531,0.00036,0.00048,0.00080,0.00083</Data></Property>
+    <Property Name="NumberOfParameters" IsReadOnly="False" ValueType="System.Int32">12</Property>
+    <Property Name="ModifiedSinceLastDataDump" IsReadOnly="False" ValueType="System.Boolean">False</Property>
+    <Property Name="Load" IsReadOnly="False" ValueType="System.Single">0</Property>
+    <Property Name="RPM" IsReadOnly="False" ValueType="System.Single">148.5911</Property>
+    <Property Name="Value" IsReadOnly="False" ValueType="System.Single">-1.1E-20</Property>
+    <Property Name="SampleID" IsReadOnly="False" ValueType="System.Int32">-1112998</Property>
+    <Property Name="Timestamp_as_String" IsReadOnly="True" ValueType="System.String">7/11/2018 9:15:54 PM</Property>
+    <Property Name="Timestamp_as_UInt" IsReadOnly="False" ValueType="System.UInt32">1531361754</Property>
+    <Property Name="Timestamp" IsReadOnly="False" ValueType="System.DateTime">7/11/2018 9:15:54 PM</Property>
+    <Property Name="StorageFlag" IsReadOnly="False" ValueType="Enum" EnumType="Emerson.CSI.DataImport.MHM.TrendDataStorageType" EnumValue="2">RPM_And_Overall</Property>
+    <Property Name="Parents" IsReadOnly="False" IsList="True" ListType="List&lt;string&gt;" ValueType="Array" ArrayType="System.String" Count="5">System.Collections.Generic.List`1[System.String]<Data>Database=phmhmdb4ts;C:\RBMdbsrv\CustData\4ts_online_1806B.rbm;-99|Area=4TS;-494|Equipment=3RDTS;-626|MeasurementPoint=D19;-637|DataCollectionSet=Normal Collection Dryer Rolls;-640</Data></Property>
+  </Entity>
+</Entities>

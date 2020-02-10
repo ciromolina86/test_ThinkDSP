@@ -16,6 +16,7 @@ import random
 import scipy
 import scipy.stats
 import scipy.fftpack
+import scipy.signal
 import struct
 import subprocess
 import thinkplot
@@ -810,6 +811,11 @@ class Wave:
         """Apply a Hamming window to the wave.
         """
         self.ys *= np.hamming(len(self.ys))
+
+    def blackman(self):
+        """Apply a Blackman window to the wave.
+        """
+        self.ys *= scipy.signal.blackman(len(self.ys))
 
     def window(self, window):
         """Apply a window to the wave.

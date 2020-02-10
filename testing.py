@@ -20,7 +20,7 @@ segment.plot()
 plt.show()
 
 spectrum = wave.make_spectrum()
-spectrum.scale(1.0)
+# spectrum.scale(1.0)
 spectrum.plot()
 plt.show()
 
