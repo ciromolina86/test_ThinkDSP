@@ -212,7 +212,6 @@ fs_JSON = np.linspace(0, MaxFrequency_JSON, N_JSON)
 plt.plot(fs_JSON, spectrum_JSON, linewidth=3, alpha=0.7)
 plt.show()
 
-
 # plt.plot(fs_JSON,spectrum_JSON)
 # plt.plot(spectrum.fs, spectrum.amps)
 # plt.show()
