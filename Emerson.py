@@ -108,7 +108,7 @@ def getEmersonSpectrumData(filepath):
 
             properties = entity.getElementsByTagName("Property")
 
-            # looking into the emtity properties
+            # looking into the entity properties
             for property in properties:
                 name = property.getAttribute('Name')
 
@@ -135,7 +135,10 @@ def getEmersonSpectrumData(filepath):
                 elif name == 'LastWrite_Time_as_UInt':
                     timestamp = property.firstChild.data
 
-    return {'len': data_list_len, 'timestamp': timestamp, 'deltaTime': delta_time, 'signal': data_final_list}
+                elif name == 'MaxFrequency':
+                    MaxFrequency = property.firstChild.data
+
+    return {'len': data_list_len, 'timestamp': timestamp, 'deltaTime': delta_time, 'MaxFrequency': MaxFrequency, 'signal': data_final_list}
 
 '''==========================================================='''
 
@@ -149,28 +152,15 @@ wave_data = getEmersonWaveFormData(filePath)
 spectrum_data = getEmersonSpectrumData(filePath)
 
 '''==========================================================='''
-
-''' Get parameters from Emerson data JSON'''
+''' Get Waveform parameters from Emerson data JSON'''
 ys = wave_data['signal']
 d = float(wave_data['deltaTime'])
 timeStamp = float(wave_data['timestamp'])
 N = wave_data['len']
 
-''' Get parameters from Emerson data JSON'''
-N_JSON = spectrum_data['len']
-Max_Freq = spectrum_data['MaxFrequency']
-spectrum_JSON = spectrum_data['signal']
-
 ''' Calculated parameters'''
 framerate = 1/d
 duration = N*d
-ts = np.linspace(0, duration, N)
-fs = np.linspace(0, framerate*N, N)
-# fs = np.arange(N2)
-spectrum_calc = np.zeros(N)
-spectrum_calc[:len(spectrum_JSON)] = spectrum_JSON
-
-'''==========================================================='''
 
 ''' Print data to inspect parameters'''
 # print('data: ', wave_data)
@@ -178,31 +168,58 @@ spectrum_calc[:len(spectrum_JSON)] = spectrum_JSON
 # print('sample frequency: ', framerate)
 # print('duration of wave: ', duration)
 
-# print('original spectrum data: ', spectrum2[:10])
-# print('thinkdsp spectrum data: ', spectrum.amps[:10])
+''' creating linear time vector to create a wave object'''
+ts = np.linspace(0, duration, N)
 
-'''==========================================================='''
-
+''' creating wave object'''
 wave = thinkdsp.Wave(ys, ts=ts, framerate=framerate)
+
+''' working with the wave object'''
 # wave.normalize()
 # wave.hamming()
 # wave.plot()
 # plt.show()
 
 '''==========================================================='''
-
+''' creating a spectrum object from a wave object'''
 spectrum = wave.make_spectrum()
-# spectrum.plot_power()
-print(spectrum.max_freq)
-spectrum.max_freq = Max_Freq
-print(spectrum.max_freq) #
-spectrum.plot()
+
+''' printing data to inspect '''
+# print(spectrum.max_freq)
+# print(spectrum.amps[:5], '===', len(spectrum))
+# print(spectrum_JSON[:5], '===', len(spectrum_JSON))
+# print('\n')
+# print(spectrum.fs[625])
+
+''' working with the spectrum'''
+
+
+''' plotting spectrum'''
+# spectrum.plot_power(high=625)  # MaxFrequency = 625 (from xml data). hardcoded until parsing is implemented
+spectrum.plot(high=625)  # MaxFrequency = 625 (from xml data). hardcoded until parsing is implemented
 plt.show()
 
 '''==========================================================='''
+''' Get Spectrum parameters from Emerson data JSON'''
+N_JSON = spectrum_data['len']
+spectrum_JSON = spectrum_data['signal']
+MaxFrequency_JSON = float(spectrum_data['MaxFrequency'])  # hardcoded until parsing is implemented
 
-plt.plot(fs, spectrum_calc)
+''' creating linear frequency vector to plot original spectrum'''
+fs_JSON = np.linspace(0, MaxFrequency_JSON, N_JSON)
+
+''' plotting original spectrum'''
+plt.plot(fs_JSON, spectrum_JSON, linewidth=3, alpha=0.7)
 plt.show()
 
 
+# plt.plot(fs_JSON,spectrum_JSON)
+# plt.plot(spectrum.fs, spectrum.amps)
+# plt.show()
 
+
+'''==========================================================='''
+''' testing code '''
+# fs_JSON = np.arange(N_JSON)  # indexes
+# spectrum_calc = np.zeros(N)  # creating an array of zeros
+# spectrum_calc[:len(spectrum_JSON)] = spectrum_JSON  # inserting spectrum_JSON into the array of zeros
