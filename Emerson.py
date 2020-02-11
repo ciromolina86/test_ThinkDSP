@@ -14,8 +14,9 @@ import scipy.io.wavfile
 import thinkdsp
 import thinkplot
 
+import math
 '''==========================================================='''
-
+''' Emerson parsing function definition'''
 '''function to extract the Emerson wave form information'''
 def getEmersonWaveFormData(filepath):
     """
@@ -141,23 +142,29 @@ def getEmersonSpectrumData(filepath):
     return {'len': data_list_len, 'timestamp': timestamp, 'deltaTime': delta_time, 'MaxFrequency': MaxFrequency, 'signal': data_final_list}
 
 '''==========================================================='''
-
 ''' Emerson vibration files path'''
 filePath = 'Emerson Files//42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
 
+'''==========================================================='''
 ''' Get Emerson wave form data '''
 wave_data = getEmersonWaveFormData(filePath)
 
-''' Get Emerson wave form data '''
-spectrum_data = getEmersonSpectrumData(filePath)
-
-'''==========================================================='''
 ''' Get Waveform parameters from Emerson data JSON'''
 ys = wave_data['signal']
 d = float(wave_data['deltaTime'])
 timeStamp = float(wave_data['timestamp'])
 N = wave_data['len']
 
+'''==========================================================='''
+''' Get Emerson wave form data '''
+spectrum_data = getEmersonSpectrumData(filePath)
+
+''' Get Spectrum parameters from Emerson data JSON'''
+N_JSON = spectrum_data['len']
+spectrum_JSON = spectrum_data['signal']
+MaxFrequency_JSON = float(spectrum_data['MaxFrequency'])
+
+'''==========================================================='''
 ''' Calculated parameters'''
 framerate = 1/d
 duration = N*d
@@ -169,56 +176,78 @@ duration = N*d
 # print('duration of wave: ', duration)
 
 ''' creating linear time vector to create a wave object'''
-ts = np.linspace(0, duration, N)
+ts = np.linspace(0, duration, N, endpoint=False)
+# print('dt= ', d)
+# print('samples', ts[:5])
 
-''' creating wave object'''
+''' creating a Wave object'''
 wave = thinkdsp.Wave(ys, ts=ts, framerate=framerate)
 
 ''' working with the wave object'''
-# wave.normalize()
-# wave.hamming()
-# wave.plot()
-# plt.show()
+# wave.unbias()
+wave.normalize()
+wave.hanning()  # windowing types: np.hanning, np.hamming, np.bartlett, np.blackman, np.kaiser
+wave.plot()
+plt.show()
 
 '''==========================================================='''
 ''' creating a spectrum object from a wave object'''
 spectrum = wave.make_spectrum()
 
+''' working with the spectrum'''
+# spectrum.low_pass(cutoff=625)
+spectrum.hs /= N/2  # looking for a normalized magnitude value
+
 ''' printing data to inspect '''
 # print(spectrum.max_freq)
 # print(spectrum.amps[:5], '===', len(spectrum))
 # print(spectrum_JSON[:5], '===', len(spectrum_JSON))
-# print('\n')
-# print(spectrum.fs[625])
-
-''' working with the spectrum'''
-
 
 ''' plotting spectrum'''
-# spectrum.plot_power(high=625)  # MaxFrequency = 625 (from xml data). hardcoded until parsing is implemented
-spectrum.plot(high=625)  # MaxFrequency = 625 (from xml data). hardcoded until parsing is implemented
+# spectrum.plot_power(high=MaxFrequency_JSON)  # MaxFrequency = 625 (from xml data)
+spectrum.plot(high=MaxFrequency_JSON, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
 plt.show()
 
-'''==========================================================='''
-''' Get Spectrum parameters from Emerson data JSON'''
-N_JSON = spectrum_data['len']
-spectrum_JSON = spectrum_data['signal']
-MaxFrequency_JSON = float(spectrum_data['MaxFrequency'])  # hardcoded until parsing is implemented
-
-''' creating linear frequency vector to plot original spectrum'''
-fs_JSON = np.linspace(0, MaxFrequency_JSON, N_JSON)
-
-''' plotting original spectrum'''
-plt.plot(fs_JSON, spectrum_JSON, linewidth=3, alpha=0.7)
-plt.show()
-
-# plt.plot(fs_JSON,spectrum_JSON)
-# plt.plot(spectrum.fs, spectrum.amps)
+# ''' reconstructing wave back from Spectrum data'''
+# spectrum.hs *= N/2  # spectrum.hs needs to be without change to reconstruct the original signal
+# wave1 = spectrum.make_wave()
+#
+# ''' plotting original wave back'''
+# wave1.plot()
 # plt.show()
 
+'''==========================================================='''
+''' creating linear frequency vector to plot original spectrum'''
+fs_JSON = np.linspace(0, MaxFrequency_JSON, N_JSON)
+# print('max freq', fs_JSON[-1])
+
+''' creating a spectrum from Emerson data'''
+temp1_zeros = np.zeros(int(N/2))
+temp1_zeros[:len(spectrum_JSON)] = spectrum_JSON
+temp2_zeros = np.zeros(int(N/2))
+temp2_zeros[:len(fs_JSON)] = fs_JSON
+
+spectrum2 = thinkdsp.Spectrum(hs=temp1_zeros, fs=temp2_zeros, framerate=framerate)
+
+''' plotting original spectrum'''
+spectrum2.plot(linewidth=1, alpha=0.7)
+plt.show()
+
+# ''' reconstructing wave back from Emerson Spectrum data'''
+# wave2 = spectrum2.make_wave()
+#
+# ''' plotting original wave back'''
+# wave2.plot()  # does not look like the original wave
+# plt.show()
 
 '''==========================================================='''
 ''' testing code '''
 # fs_JSON = np.arange(N_JSON)  # indexes
 # spectrum_calc = np.zeros(N)  # creating an array of zeros
 # spectrum_calc[:len(spectrum_JSON)] = spectrum_JSON  # inserting spectrum_JSON into the array of zeros
+
+# plt.plot(fs_JSON, spectrum_JSON, linewidth=1, alpha=0.7)
+
+# plt.plot(fs_JSON,spectrum_JSON)
+# plt.plot(spectrum.fs, spectrum.amps)
+# plt.show()

@@ -812,10 +812,25 @@ class Wave:
         """
         self.ys *= np.hamming(len(self.ys))
 
+    def hanning(self):
+        """Apply a Hannming window to the wave.
+        """
+        self.ys *= np.hanning(len(self.ys))
+
     def blackman(self):
         """Apply a Blackman window to the wave.
         """
-        self.ys *= scipy.signal.blackman(len(self.ys))
+        self.ys *= np.blackman(len(self.ys))
+
+    def bartlett(self):
+        """Apply a Bartlett window to the wave.
+        """
+        self.ys *= np.bartlett(len(self.ys))
+
+    def kaiser(self, beta):
+        """Apply a Kaiser window to the wave.
+        """
+        self.ys *= np.kaiser(len(self.ys), beta=beta)
 
     def window(self, window):
         """Apply a window to the wave.
