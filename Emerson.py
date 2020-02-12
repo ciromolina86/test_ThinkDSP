@@ -186,10 +186,17 @@ wave.unbias()
 wave.normalize()
 wave.window(np.hanning(len(wave_JSON)))  # windowing = Hanning
 
-plt.subplot(311)
+plt.subplot(221)
+plt.title('Waveform')
+plt.ylabel('Axis X')
 wave.plot()
-plt.xlabel('time (s)')
-plt.ylabel('Waveform')
+
+plt.subplot(223)
+plt.ylabel('Axis Z')
+plt.xlabel('Time (s)')
+wave.plot()
+
+
 # plt.show()
 
 # plt.plot(wave.ts, wave.ys)
@@ -213,13 +220,18 @@ spectrum.hs *= 2/N_wave_JSON  # looking for a normalized magnitude value
 # print(spectrum_JSON[:5], '===', len(spectrum_JSON))
 
 ''' plotting spectrum'''
-plt.subplot(312)
+plt.subplot(222)
+plt.title('Spectrum')
 spectrum.plot(high=MaxFrequency_JSON, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
-plt.ylabel('Spectrum')
-plt.subplot(313)
-spectrum.plot_power(high=MaxFrequency_JSON, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
-plt.ylabel('Power')
+
+plt.subplot(224)
 plt.xlabel('Freq (Hz)')
+spectrum.plot(high=MaxFrequency_JSON, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
+
+# plt.subplot(313)
+# spectrum.plot_power(high=MaxFrequency_JSON, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
+# plt.ylabel('Power')
+
 plt.show()
 
 '''==========================================================='''
@@ -229,6 +241,15 @@ fs_JSON = np.linspace(0, MaxFrequency_JSON, N_spectrum_JSON)
 ''' plotting original spectrum'''
 # plt.plot(fs_JSON, spectrum_JSON, linewidth=1, alpha=0.7)
 # plt.show()
+
+
+'''==========================================================='''
+''' plotting waterfall plot '''
+# fig = plt.figure()  # facecolor='k'
+# ax = fig.add_subplot(211)  # , axisbg='k'
+# ax = fig.add_subplot(212)  # , axisbg='k'
+# plt.show()
+
 
 
 
