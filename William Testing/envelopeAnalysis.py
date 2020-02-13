@@ -83,20 +83,6 @@ def getEmersonWaveFormData(filepath):
     return {'len': data_list_len, 'timestamp': timestamp, 'deltaTime': delta_time, 'signal': data_final_list}
 
 
-def butter_bandpass(lowcut, highcut, fs, order=5):
-    nyq = 0.5 * fs
-    low = lowcut / nyq
-    high = highcut / nyq
-    b, a = butter(order, [low, high], btype='band')
-    return b, a
-
-
-def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
-    b, a = butter_bandpass(lowcut, highcut, fs, order=order)
-    y = lfilter(b, a, data)
-    return y
-
-
 '''=========================  Raw Vibration Signal   =================================='''
 '''====================================================================================='''
 
@@ -118,9 +104,6 @@ fs = 1/dt_JSON
 duration = N_wave_JSON*dt_JSON
 
 
-lowcut = 100
-highcut = 200
-
 ''' creating linear time vector to create a wave object'''
 t = np.linspace(0, duration, N_wave_JSON, endpoint=False)
 
@@ -128,12 +111,26 @@ t = np.linspace(0, duration, N_wave_JSON, endpoint=False)
 '''=========================  Band-pas filter   =================================='''
 '''====================================================================================='''
 
+''' Creating a Wave object'''
+raw_wave = thinkdsp.Wave(ys=wave_JSON, ts=t, framerate=fs)
+''' working with the wave object'''
+raw_wave.unbias()
+raw_wave.normalize()
+raw_wave.window(np.hanning(len(wave_JSON)))  # windowing = Hanning
 
-filtered_wave_JSON = butter_bandpass_filter(wave_JSON, lowcut, highcut, fs)
 
-# Signal Enveloping
+''' Creating a spectrum object from a wave object'''
+raw_spectrum = raw_wave.make_spectrum()
 
-analytic_signal = hilbert(filtered_wave_JSON)
+''' Filtering'''
+raw_spectrum.high_pass(400)
+raw_wave_filtered = raw_spectrum.make_wave()
+filtered_signal = raw_wave_filtered.ys
+
+
+''' Signal Enveloping using hilbert transform'''
+
+analytic_signal = hilbert(filtered_signal)
 amplitude_envelope = np.abs(analytic_signal)
 instantaneous_phase = np.unwrap(np.angle(analytic_signal))
 instantaneous_frequency = np.diff(instantaneous_phase) / (2.0*np.pi) * fs
@@ -166,7 +163,7 @@ spectrum.hs *= 2/N_wave_JSON  # looking for a normalized magnitude value
 
 fig = plt.figure()
 ax0 = fig.add_subplot(211)
-ax0.plot(t, filtered_wave_JSON, label='signal')
+ax0.plot(t, filtered_signal, label='signal')
 ax0.plot(t, amplitude_envelope, label='envelope')
 ax0.set_xlabel("time in seconds")
 ax0.legend()
