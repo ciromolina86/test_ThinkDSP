@@ -15,6 +15,9 @@ import thinkdsp
 import thinkplot
 
 import math
+
+import testing_waterfall_plot
+
 '''==========================================================='''
 ''' Emerson parsing function definition'''
 '''function to extract the Emerson wave form information'''
@@ -216,7 +219,7 @@ spectrum.hs *= 2/N_wave_JSON  # looking for a normalized magnitude value
 
 ''' printing data to inspect '''
 # print(spectrum.max_freq)  # max_freq = 800 Hz
-# print(spectrum.amps[:5], '===', len(spectrum))
+print(spectrum.amps[:5], '===', len(spectrum))
 # print(spectrum_JSON[:5], '===', len(spectrum_JSON))
 
 ''' plotting spectrum'''
@@ -245,12 +248,9 @@ fs_JSON = np.linspace(0, MaxFrequency_JSON, N_spectrum_JSON)
 
 '''==========================================================='''
 ''' plotting waterfall plot '''
-# fig = plt.figure()  # facecolor='k'
-# ax = fig.add_subplot(211)  # , axisbg='k'
-# ax = fig.add_subplot(212)  # , axisbg='k'
-# plt.show()
+spectra = np.zeros(10)
 
-
+testing_waterfall_plot.plot_waterfall(spectra=spectra,  maxfreq=1)
 
 
 '''==========================================================='''
