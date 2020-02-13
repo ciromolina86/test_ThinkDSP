@@ -81,37 +81,62 @@ def plot_waterfall(spectra, maxfreq):
     # ax1 = fig.add_subplot(111, projection='3d')
     ax1 = fig.add_subplot(projection='3d')
 
-    # creating samples vector
     # vector of samples
     y = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
-    # data arrays, Z must be a bi-dimensional array
+    # vector of frequencies
+    x = np.array(np.linspace(0, maxfreq, len(spectra[0].amps), endpoint=False), ndmin=2)
+
     for s in spectra:
-        i = 0
-        # vector of frequencies
-        x = np.linspace(0, maxfreq, 10, endpoint=False)
-
         # vector of magnitudes
-        # z = np.array([[s.amps]])
-        z = np.array(np.sin(2 * np.pi * x), ndmin=2)
+        z = np.array(s.amps, ndmin=2)
 
-        # set the title and axis labels
-        ax1.set_title('Spectra comparison')
-        ax1.set_xlabel('Frequency (Hz)')
-        ax1.set_ylabel('Samples')
-        ax1.set_zlabel('Magnitude')
-
-        # set the tick of an axis to a specific spacing
-        tick_spacing = 1
-        ax1.yaxis.set_major_locator(ticker.MultipleLocator(tick_spacing))
-
-        # plot x, y, z on 3D plot
+        cc
         ax1.plot_wireframe(x, y[i], z)
 
-        # increment index by 1
-        i += 1
+
+    # # plot x, y, z on 3D plot
+    # for i in y:
+    #     ax1.plot_wireframe(x, y[i], z)
 
     # Show plot
     plt.show()
 
-plot_waterfall_test()
+    # data arrays, Z must be a bi-dimensional array
+    # for s in spectra:
+    #     i = 0
+    #
+    #     # vector of magnitudes
+    #     z = np.array(s.amps, ndmin=2)
+    #     # z = np.array(np.sin(2 * np.pi * x), ndmin=2)
+    #
+    #     # set the title and axis labels
+    #     ax1.set_title('Spectra comparison')
+    #     ax1.set_xlabel('Frequency (Hz)')
+    #     ax1.set_ylabel('Samples')
+    #     ax1.set_zlabel('Magnitude')
+    #
+    #     # set the tick of an axis to a specific spacing
+    #     tick_spacing = 1
+    #     ax1.yaxis.set_major_locator(ticker.MultipleLocator(tick_spacing))
+    #
+    #     # plot x, y, z on 3D plot
+    #     ax1.plot_wireframe(x, y, z)
+    #
+    #     # increment index by 1
+    #     i += 1
+
+    # # Show plot
+    # plt.show()
+
+def main():
+    # plot_waterfall_test()
+
+    import Emerson
+    spectra = np.full(shape=10, fill_value=Emerson.spectrum)
+    plot_waterfall(spectra=spectra, maxfreq=625)
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()

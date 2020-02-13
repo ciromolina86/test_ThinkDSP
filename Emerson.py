@@ -219,7 +219,7 @@ spectrum.hs *= 2/N_wave_JSON  # looking for a normalized magnitude value
 
 ''' printing data to inspect '''
 # print(spectrum.max_freq)  # max_freq = 800 Hz
-print(spectrum.amps[:5], '===', len(spectrum))
+# print(spectrum.amps[:5], '===', len(spectrum))
 # print(spectrum_JSON[:5], '===', len(spectrum_JSON))
 
 ''' plotting spectrum'''
@@ -248,9 +248,13 @@ fs_JSON = np.linspace(0, MaxFrequency_JSON, N_spectrum_JSON)
 
 '''==========================================================='''
 ''' plotting waterfall plot '''
-spectra = np.zeros(10)
 
-testing_waterfall_plot.plot_waterfall(spectra=spectra,  maxfreq=1)
+# creating an array of 10 spectrum objects
+spectra = np.full(shape=10, fill_value=spectrum)
+# for s in spectra:
+#     print(s.amps)
+
+# testing_waterfall_plot.plot_waterfall(spectra=spectra,  maxfreq=625)
 
 
 '''==========================================================='''
