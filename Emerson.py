@@ -1,22 +1,11 @@
 '''
 import useful modules for vibration analysis
 '''
-import os
 from xml.dom import minidom
 import matplotlib.pyplot as plt
 import numpy as np
-import warnings
-
-import scipy.fftpack
-import scipy.signal
-import scipy.io.wavfile
 
 import thinkdsp
-import thinkplot
-
-import math
-
-import testing_waterfall_plot
 
 '''==========================================================='''
 ''' Emerson parsing function definition'''
