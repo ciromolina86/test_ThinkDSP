@@ -1,9 +1,12 @@
 import numpy as np
+
 import matplotlib.pyplot as plt
 from matplotlib import style
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.ticker as ticker
+
 import thinkdsp
+
 
 def plot_waterfall_test():
     '''
@@ -67,10 +70,10 @@ def plot_waterfall_test():
 
 
 def plot_waterfall(spectra, maxfreq):
-    '''
-    waterfall plot for 10 Spectrum objects
+    '''waterfall plot for 10 Spectrum objects
 
-    :param parameters: list of 10 Spectrum objects
+    :param spectra: list of 10 Spectrum objects
+    :param maxfreq: maximum frequency
     :return: void
     '''
 
@@ -87,47 +90,31 @@ def plot_waterfall(spectra, maxfreq):
     # vector of frequencies
     x = np.array(np.linspace(0, maxfreq, len(spectra[0].amps), endpoint=False), ndmin=2)
 
+    # creating an index for y axis
+    i=0
+
     for s in spectra:
         # vector of magnitudes
+        # Z must be a bi-dimensional array
         z = np.array(s.amps, ndmin=2)
 
-        cc
+        # plot x, y, z on 3D plot
         ax1.plot_wireframe(x, y[i], z)
+        i+=1
 
+    # set the title and axis labels
+    ax1.set_title('Spectra comparison')
+    ax1.set_xlabel('Frequency (Hz)')
+    ax1.set_ylabel('Samples')
+    ax1.set_zlabel('Magnitude')
 
-    # # plot x, y, z on 3D plot
-    # for i in y:
-    #     ax1.plot_wireframe(x, y[i], z)
+    # set the tick of an axis to a specific spacing
+    tick_spacing = 1
+    ax1.yaxis.set_major_locator(ticker.MultipleLocator(tick_spacing))
 
     # Show plot
     plt.show()
 
-    # data arrays, Z must be a bi-dimensional array
-    # for s in spectra:
-    #     i = 0
-    #
-    #     # vector of magnitudes
-    #     z = np.array(s.amps, ndmin=2)
-    #     # z = np.array(np.sin(2 * np.pi * x), ndmin=2)
-    #
-    #     # set the title and axis labels
-    #     ax1.set_title('Spectra comparison')
-    #     ax1.set_xlabel('Frequency (Hz)')
-    #     ax1.set_ylabel('Samples')
-    #     ax1.set_zlabel('Magnitude')
-    #
-    #     # set the tick of an axis to a specific spacing
-    #     tick_spacing = 1
-    #     ax1.yaxis.set_major_locator(ticker.MultipleLocator(tick_spacing))
-    #
-    #     # plot x, y, z on 3D plot
-    #     ax1.plot_wireframe(x, y, z)
-    #
-    #     # increment index by 1
-    #     i += 1
-
-    # # Show plot
-    # plt.show()
 
 def main():
     # plot_waterfall_test()

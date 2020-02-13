@@ -1,11 +1,13 @@
 '''
-import useful modules for vibration analysis
+import useful modules for fft analysis
 '''
-from xml.dom import minidom
-import matplotlib.pyplot as plt
 import numpy as np
 
+from xml.dom import minidom
+import matplotlib.pyplot as plt
+
 import thinkdsp
+
 
 '''==========================================================='''
 ''' Emerson parsing function definition'''
@@ -135,7 +137,7 @@ def getEmersonSpectrumData(filepath):
 
 '''==========================================================='''
 ''' Emerson vibration files path'''
-filePath = 'Emerson Files//42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
+filePath = 'C://Users//cmolina//PycharmProjects//test_ThinkDSP//Emerson Files//42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
 
 '''==========================================================='''
 ''' Get Emerson wave form data '''
@@ -233,17 +235,6 @@ fs_JSON = np.linspace(0, MaxFrequency_JSON, N_spectrum_JSON)
 ''' plotting original spectrum'''
 # plt.plot(fs_JSON, spectrum_JSON, linewidth=1, alpha=0.7)
 # plt.show()
-
-
-'''==========================================================='''
-''' plotting waterfall plot '''
-
-# creating an array of 10 spectrum objects
-spectra = np.full(shape=10, fill_value=spectrum)
-# for s in spectra:
-#     print(s.amps)
-
-# testing_waterfall_plot.plot_waterfall(spectra=spectra,  maxfreq=625)
 
 
 '''==========================================================='''
