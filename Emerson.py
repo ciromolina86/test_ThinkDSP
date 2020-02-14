@@ -137,7 +137,7 @@ def getEmersonSpectrumData(filepath):
 
 '''==========================================================='''
 ''' Emerson vibration files path'''
-filePath = 'C://Users//cmolina//PycharmProjects//test_ThinkDSP//Emerson Files//42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
+filePath = '/home/developer/Documents/pyproject/test_ThinkDSP/Emerson Files/42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
 
 '''==========================================================='''
 ''' Get Emerson wave form data '''
