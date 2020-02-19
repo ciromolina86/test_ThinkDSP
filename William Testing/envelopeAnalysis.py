@@ -88,7 +88,10 @@ def getEmersonWaveFormData(filepath):
 
 
 ''' Emerson vibration files path'''
-filePath = '/home/developer/Documents/pyproject/test_ThinkDSP/Emerson Files/42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
+# willy filepath
+# filePath = '/home/developer/Documents/pyproject/test_ThinkDSP/Emerson Files/42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
+# ciro filepath
+filePath = 'C://Users//cmolina//PycharmProjects//test_ThinkDSP//Emerson Files//42b1b828-1fb7-4468-ac0d-7959be794f85.xml'
 
 ''' Get Emerson wave form data '''
 wave_data = getEmersonWaveFormData(filePath)
@@ -108,7 +111,7 @@ duration = N_wave_JSON*dt_JSON
 t = np.linspace(0, duration, N_wave_JSON, endpoint=False)
 
 
-'''=========================  Band-pas filter   =================================='''
+'''=========================  Band-pass filter   =================================='''
 '''====================================================================================='''
 
 ''' Creating a Wave object'''
@@ -162,12 +165,19 @@ spectrum.hs *= 2/N_wave_JSON  # looking for a normalized magnitude value
 '''====================================================================================='''
 
 fig = plt.figure()
-ax0 = fig.add_subplot(211)
+ax0 = fig.add_subplot(311)
 ax0.plot(t, filtered_signal, label='signal')
+ax0.legend()
+# plt.show()
+
+ax0 = fig.add_subplot(312)
 ax0.plot(t, amplitude_envelope, label='envelope')
 ax0.set_xlabel("time in seconds")
 ax0.legend()
-plt.show()
-plt.title('Spectrum')
-spectrum.plot(high=625, linewidth=1, alpha=0.7)  # MaxFrequency = 625 (from xml data)
+# plt.show()
+
+ax0 = fig.add_subplot(313)
+# plt.title('Spectrum')
+spectrum.plot(high=625, linewidth=1, alpha=0.7, label='spectrum')  # MaxFrequency = 625 (from xml data)
+ax0.legend()
 plt.show()
